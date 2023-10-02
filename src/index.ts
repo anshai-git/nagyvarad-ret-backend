@@ -1,7 +1,15 @@
-import { Elysia } from "elysia";
+import { Elysia } from 'elysia';
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+import { swagger } from '@elysiajs/swagger';
+import { cors } from '@elysiajs/cors';
+import router from './router';
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+const PORT = process.env.PORT ?? 3000;
+
+const app: Elysia = new Elysia()
+    .use(cors())
+    .use(swagger())
+    .use(router)
+    .listen(PORT);
+
+console.log( `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
