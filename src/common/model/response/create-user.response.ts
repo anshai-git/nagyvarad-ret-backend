@@ -1,3 +1,7 @@
+import { UserDTO } from "../dto/user.dto";
+
 export class CreateUserResponse {
-    constructor(public username: string) {}
+    constructor(
+        public user: UserDTO
+    ) {}
 }
