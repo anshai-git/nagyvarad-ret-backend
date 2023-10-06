@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>~/Self/Projects/nagyvarad-ret/nagyvarad-ret-api/src/router.ts.html</title>
+<meta name="Generator" content="Vim/8.1">
+<meta name="plugin-version" content="vim9.0_v2">
+<meta name="syntax" content="none">
+<meta name="settings" content="number_lines,use_css,no_foldcolumn,expand_tabs,line_ids,pre_wrap,prevent_copy=,use_input_for_pc=none">
+<meta name="colorscheme" content="melange">
+<style>
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #ece1d7; background-color: #292522; }
+body { font-family: monospace; color: #ece1d7; background-color: #292522; }
+* { font-size: 1em; }
+.LineNr { color: #867462; }
+-->
+</style>
+
+<script>
+<!--
+
+/* function to open any folds containing a jumped-to line before jumping to it */
+function JumpToLine()
+{
+  var lineNum;
+  lineNum = window.location.hash;
+  lineNum = lineNum.substr(1); /* strip off '#' */
+
+  if (lineNum.indexOf('L') == -1) {
+    lineNum = 'L'+lineNum;
+  }
+  var lineElem = document.getElementById(lineNum);
+  /* Always jump to new location even if the line was hidden inside a fold, or
+   * we corrected the raw number to a line ID.
+   */
+  if (lineElem) {
+    lineElem.scrollIntoView(true);
+  }
+  return true;
+}
+if ('onhashchange' in window) {
+  window.onhashchange = JumpToLine;
+}
+
+-->
+</script>
+</head>
+<body onload='JumpToLine();'>
+<pre id='vimCodeElement'>
+<span id="L1" class="LineNr"> 1 </span>import { Elysia } from 'elysia';
+<span id="L2" class="LineNr"> 2 </span>import AuthRouter from './modules/auth/auth.router';
+<span id="L3" class="LineNr"> 3 </span>import DailyVerseRouter from './modules/public/daily-verse/daily-verse.router';
+<span id="L4" class="LineNr"> 4 </span>import AdminRouter from './modules/admin/admin.router';
+<span id="L5" class="LineNr"> 5 </span>
+<span id="L6" class="LineNr"> 6 </span>const authRoutes: Elysia = new Elysia()
+<span id="L7" class="LineNr"> 7 </span>    .group('/auth',         app =&gt; app.use(AuthRouter));
+<span id="L8" class="LineNr"> 8 </span>
+<span id="L9" class="LineNr"> 9 </span>const adminRoutes: Elysia = new Elysia()
+<span id="L10" class="LineNr">10 </span>    .group('/admin',        app =&gt; app.use(AdminRouter));
+<span id="L11" class="LineNr">11 </span>
+<span id="L12" class="LineNr">12 </span>const publicRoutes: Elysia = new Elysia()
+<span id="L13" class="LineNr">13 </span>    .group('/daily-verse',  app =&gt; app.use(DailyVerseRouter));
+<span id="L14" class="LineNr">14 </span>
+<span id="L15" class="LineNr">15 </span>
+<span id="L16" class="LineNr">16 </span>const appRouter: Elysia = new Elysia()
+<span id="L17" class="LineNr">17 </span>    .use(authRoutes)
+<span id="L18" class="LineNr">18 </span>    .use(publicRoutes)
+<span id="L19" class="LineNr">19 </span>    .use(adminRoutes);
+<span id="L20" class="LineNr">20 </span>
+<span id="L21" class="LineNr">21 </span>export default appRouter;
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

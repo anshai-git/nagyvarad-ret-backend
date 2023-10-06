@@ -1,4 +1,4 @@
-import { Option, isSome } from 'fp-ts/lib/Option';
+import { Option, getOrElse, isSome } from 'fp-ts/lib/Option';
 import { ApiError } from '../../common/api.error';
 import { ApiResponse } from '../../common/api.response';
 import { ErrorCodes } from '../../common/constants';
@@ -6,16 +6,23 @@ import { LogInResponse } from '../../common/model/response/log-in.response';
 import AuthService from './auth.service';
 import { Context } from 'elysia';
 import { AuthToken } from '../../common/model/auth-token';
+import { Credentials } from '../../common/model/credentials';
+import { LogInRequest } from '../../common/model/request/log-in.request';
+import { ApiRequest } from '../../common/api.request';
+import { pipe } from 'fp-ts/lib/function';
 
 class AuthController {
 
-    async logIn(context: Context): Promise<ApiResponse<LogInResponse>> {
-        const credentials = {};
-        const response: ApiResponse<LogInResponse> = AuthService.logIn(credentials)
-            .then((token: Option<AuthToken>) => {
-                if(!this.isTokenValid(token)) throw new ApiError(ErrorCodes.API_ERROR,'invalid token generated');
-                
-                const logInResponse: LogInResponse = new LogInResponse(token);
+    async logIn(request: ApiRequest<LogInRequest>): Promise<ApiResponse<LogInResponse | null>> {
+        const credentials: Credentials = new Credentials(request.payload.username, request.payload.password);
+        const response: Promise<ApiResponse<LogInResponse | null>> = AuthService.logIn(credentials)
+            .then((token) => {
+                const authToken: string | null = pipe(
+                    token,
+                    getOrElse(() => null)
+                )
+                if(!this.isTokenValid(authToken)) throw new ApiError(ErrorCodes.API_ERROR,'invalid token generated');
+                const logInResponse: LogInResponse = new LogInResponse(authToken);
                 return ApiResponse.forSuccess(logInResponse);
             })
             .catch((error: Error) => {
