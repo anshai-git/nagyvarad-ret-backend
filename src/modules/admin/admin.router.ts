@@ -1,8 +1,8 @@
 import { Context, Elysia } from 'elysia';
 
-import AdminController from './admin.controller';
+import UserRouter from './users/users.router';
 
 const AdminRouter = new Elysia()
-    .post('/create-user', (context: Context) => AdminController.createUser(context));
+    .group('/user', app => app.use(UserRouter));
 
 export default AdminRouter;
