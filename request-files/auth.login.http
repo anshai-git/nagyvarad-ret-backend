@@ -1,0 +1,9 @@
+POST http://localhost:3000/auth/log-in
+Content-Type: application/json
+
+{
+    "payload": {
+        "username": "admin",
+        "password": "admin",
+    }
+}

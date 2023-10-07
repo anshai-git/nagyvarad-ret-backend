@@ -1,3 +1,5 @@
+import { DailyVerse } from "@prisma/client";
+
 export class DailyVerseDTO {
     constructor(
         public date: Date,
@@ -14,9 +16,31 @@ export class DailyVerseDTO {
 
         public oldVerseTitle: string,
         public oldVerseLocation: string,
+        public oldVerse: string,
 
         public oldVerseExplicationTitle: string,
         public oldVerseExplicationSubtitle: string,
         public oldVerseExplication: string
     ) {}
+
+    public static fromEntity(entity: DailyVerse): DailyVerseDTO {
+        return new DailyVerseDTO(
+            entity.date,
+            entity.nameDay,
+
+            entity.song,
+            entity.song2,
+
+            entity.newVerseTitle,
+            entity.newVerseLocation,
+            entity.newVerse,
+
+            entity.newVerseExplicationTitle,
+            entity.newVerseExplication,
+
+            entity.oldVerseTitle,
+            entity.oldVerseLocation,
+            entity.oldVerse,
+        )
+    }
 }

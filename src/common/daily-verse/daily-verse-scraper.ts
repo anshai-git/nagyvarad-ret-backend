@@ -1,11 +1,10 @@
 const axios = require('axios').default;
 import * as cheerio from 'cheerio';
-
 import { DailyVerseProvider } from "../daily-verse/daily-verse-provider";
 import { DailyVerseDTO } from '../model/dto/daily-verse.dto';
 import moment from 'moment';
 
-export class DailyVerseScraper implements DailyVerseProvider {
+class DailyVerseScraper implements DailyVerseProvider {
 
     async fetchByDate(date: Date): Promise<DailyVerse> {
         const response = await axios.get('https://reformatus.hu/isten-szolt/');
@@ -47,3 +46,6 @@ export class DailyVerseScraper implements DailyVerseProvider {
         return dailyVerse;
     }
 }
+
+const instance: DailyVerseScraper = new DailyVerseScraper();
+export default instance;
