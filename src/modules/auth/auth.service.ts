@@ -27,6 +27,7 @@ class AuthService {
         const authToken = request.headers?.authorization?.slice(7);
         const isAuthTokenValid = await JwtUtil.isAuthTokenValid(authToken)
         console.log({ isAuthTokenValid });
+        // TODO: return unauthorized http statis code if the token is not valid
         if (!isAuthTokenValid) return new Response();
     }
 }
