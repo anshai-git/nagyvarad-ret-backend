@@ -3,29 +3,46 @@ import prisma from '../prisma';
 import { Option, fromNullable } from 'fp-ts/lib/Option';
 import { DailyVerseDTO } from '../model/dto/daily-verse.dto';
 
-async function fetchByDate(date: Date): Promise<Option<DailyVerse>> {
-    return fromNullable(
-        await prisma.dailyVerse.findFirst({
-            where: {
-                date: date
+class DailyVerseRepository {
+
+    async fetchByDate(date: Date): Promise<Option<DailyVerse>> {
+        return fromNullable(
+            await prisma.dailyVerse.findFirst({
+                where: {
+                    date: date
+                }
+            }));
+    }
+
+    async save(dailyVerseDTO: DailyVerseDTO): Promise<Option<DailyVerse>> {
+        const result = await prisma.dailyVerse.create({
+            data: {
+                ...dailyVerseDTO
             }
-    }));
+        });
+
+        return fromNullable(result);
+    }
+
+    async fetchPageByDate(startDate: Date, pageSize: number, pageIndex: number): Promise<Array<DailyVerse>> {
+        const result: Array<DailyVerse> = await prisma.dailyVerse.findMany({
+            where: {
+                date: {
+                    lte: startDate
+                }
+            },
+            orderBy: [
+                {
+                    date: 'desc'
+                }
+            ],
+            skip: pageSize * (pageIndex - 1),
+            take: pageSize
+        })
+        console.log({ result });
+        return result;
+    }
 }
 
-async function save(dailyVerseDTO: DailyVerseDTO): Promise<any> {
-    const result = await prisma.dailyVerse.create({
-        data: {
-            ...dailyVerseDTO
-        }
-    });
-
-    console.log({ result })
-
-    return null;
-}
-
-
-export default {
-    fetchByDate,
-    save
-}
+const instance: DailyVerseRepository = new DailyVerseRepository();
+export default instance;

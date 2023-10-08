@@ -4,8 +4,7 @@ export class ApiResponse<T>  {
     constructor(
         public payload: T | null,
         public errors: Array<ApiError>
-    ) {
-    }
+    ) { }
 
     public static forSuccess<T>(payload: T, errors: Array<ApiError> = []): ApiResponse<T> {
         return new ApiResponse(payload, errors);

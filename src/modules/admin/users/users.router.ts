@@ -12,16 +12,21 @@ UserRouter
                 username: t.String(),
                 password: t.String()
             })
-        })
+        }),
+        // WARN: Disabled authorization for development
+        // beforeHandle: AuthService.authenticateRequest
     })
     .patch('/:id', ({ body, params: { id } }) => UserController.updateUser(+id, body.payload), {
         body: t.Object({
             payload: t.Object({
                 username: t.String()
             })
-        })
+        }),
+        beforeHandle: AuthService.authenticateRequest
     })
-    .delete('/:id', ({ params: { id }}) => UserController.deleteUser(+id))
+    .delete('/:id', ({ params: { id } }) => UserController.deleteUser(+id), {
+        beforeHandle: AuthService.authenticateRequest
+    })
 
 export default UserRouter;
 

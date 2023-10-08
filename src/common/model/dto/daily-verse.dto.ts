@@ -41,6 +41,10 @@ export class DailyVerseDTO {
             entity.oldVerseTitle,
             entity.oldVerseLocation,
             entity.oldVerse,
+
+            entity.oldVerseExplicationTitle,
+            entity.oldVerseExplicationSubtitle,
+            entity.oldVerseExplication
         )
     }
 }

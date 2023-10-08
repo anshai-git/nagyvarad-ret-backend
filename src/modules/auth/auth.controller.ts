@@ -1,4 +1,4 @@
-import AuthService, { LogInResult } from './auth.service';
+import AuthService from './auth.service';
 import { Credentials } from '../../common/model/credentials';
 import { LogInRequest } from '../../common/model/request/log-in.request';
 import { ApiRequest } from '../../common/api.request';

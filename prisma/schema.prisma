@@ -17,24 +17,25 @@ model User {
 }
 
 model DailyVerse {
-    id                  Int         @id @default(autoincrement())
-    createdAt           DateTime    @default(now())
-    updatedAt           DateTime    @updatedAt
+    id                          Int         @id @default(autoincrement())
+    createdAt                   DateTime    @default(now())
+    updatedAt                   DateTime    @updatedAt
 
-    date                DateTime
-    nameDay             String
-    song                String
-    song2               String
+    date                        DateTime
+    nameDay                     String
+    song                        String
+    song2                       String
     
-    newVerseTitle       String
-    newVerseLocation    String
-    newVerse            String
+    newVerseTitle               String
+    newVerseLocation            String
+    newVerse                    String
     
     newVerseExplicationTitle    String
     newVerseExplication         String
 
-    oldVerseTitle       String
-    oldVerseLocation    String
+    oldVerseTitle               String
+    oldVerseLocation            String
+    oldVerse                    String      @default("")
 
     oldVerseExplicationTitle    String
     oldVerseExplicationSubtitle String

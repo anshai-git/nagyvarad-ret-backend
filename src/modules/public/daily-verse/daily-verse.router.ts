@@ -3,6 +3,8 @@ import DailyVerseController from './daily-verse.controller';
 
 const DailyVerseRouter: Elysia = new Elysia();
 
-DailyVerseRouter.get('/by-date', (c) => DailyVerseController.getByDate(c));
+DailyVerseRouter
+    .get('/', ({ query }) => DailyVerseController.getDailyVerseList(query))
+    .get('/:date', ({ params }) => DailyVerseController.getByDate(params.date));
 
 export default DailyVerseRouter;
