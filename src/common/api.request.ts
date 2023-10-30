@@ -1,3 +1,3 @@
 export class ApiRequest<T> {
-    public payload: T;
+  constructor(public payload: T) {}
 }

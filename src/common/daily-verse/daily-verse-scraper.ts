@@ -7,6 +7,7 @@ class DailyVerseScraper implements DailyVerseProvider {
 
     async fetchByDate(date: Date): Promise<DailyVerseDTO> {
         const response = await axios.get('https://reformatus.hu/isten-szolt/');
+
         const dom = cheerio.load(response.data);
 
         const articleDate = dom('.article__date-and-nameday > .article__date').text();
